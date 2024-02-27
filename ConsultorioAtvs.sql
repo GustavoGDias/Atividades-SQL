@@ -156,5 +156,3 @@ select *
 from pessoas
 INNER Join medicos ON pessoas.id = medicos.id_pessoa;
 
-drop database consultorio2
-use master
