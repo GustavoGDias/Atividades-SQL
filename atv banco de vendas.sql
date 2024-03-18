@@ -72,4 +72,4 @@ WHERE cli_codigo = 2;
 --22.Consultar todos os pedidos do cliente 2 que foram vendidos pelo funcionário 6.
 SELECT *
 FROM pedidos
-WHERE cli_codigo = 2 AND fun_codigo = 6;
+WHERE cli_codigo = 2 AND fun_codigo = 6; 
