@@ -74,7 +74,3 @@ SELECT *
 FROM pedidos
 WHERE cli_codigo = 2 AND fun_codigo = 6; 
 
---23Consultar os pedidos que foram solicitados pelo cliente 2, registrados pelo funcionário 8 e conferidos pelo estagiário 5.
-SELECT *
-FROM pedidos
-WHERE cli_codigo = 2 AND fun_codigo = 8 AND est_codigo = 5;
