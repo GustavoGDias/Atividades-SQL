@@ -1,6 +1,6 @@
-create database consultorio2;
+create database consultorio1;
 
-use consultorio2;
+use consultorio1;
 
 create table pessoas(
 	id int not null primary key identity,
@@ -46,8 +46,8 @@ create table enderecos(
 	foreign key (id_pessoa) references pessoas (id)
 );
 
--- Endere�os
-insert into enderecos (id_pessoa, logradouro, numero, cep, bairro, cidade, estado) values (1, 'Rua A', '100', '12345-678', 'Centro', 'S�o Paulo', 'SP');
+-- Endereços
+insert into enderecos (id_pessoa, logradouro, numero, cep, bairro, cidade, estado) values (1, 'Rua A', '100', '12345-678', 'Centro', 'São Paulo', 'SP');
 insert into enderecos (id_pessoa, logradouro, numero, cep, bairro, cidade, estado) values (2, 'Rua B', '200', '54321-876', 'Centro', 'Rio de Janeiro', 'RJ');
 insert into enderecos (id_pessoa, logradouro, numero, cep, bairro, cidade, estado) values (3, 'Rua C', '300', '98765-432', 'Centro', 'Belo Horizonte', 'MG');
 insert into enderecos (id_pessoa, logradouro, numero, cep, bairro, cidade, estado) values (4, 'Rua D', '400', '56789-012', 'Centro', 'Porto Alegre', 'RS');
@@ -62,7 +62,7 @@ create table pacientes(
 -- Pacientes
 insert into pacientes (id_pessoa, convenio) values (1, 'Unimed');
 insert into pacientes (id_pessoa, convenio) values (2, 'Amil');
-insert into pacientes (id_pessoa, convenio) values (3, 'SulAm�rica');
+insert into pacientes (id_pessoa, convenio) values (3, 'SulAmérica');
 insert into pacientes (id_pessoa, convenio) values (4, 'Golden Cross');
 insert into pacientes (id_pessoa, convenio) values (5, 'Bradesco');
 
@@ -72,7 +72,7 @@ create table medicos(
 	foreign key (id_pessoa) references pessoas (id)
 );
 
--- M�dicos
+-- Médicos
 insert into medicos (id_pessoa, crm) values (1, 'CRM-SP5469');
 insert into medicos (id_pessoa, crm) values (2, 'CRM-SP5379');
 insert into medicos (id_pessoa, crm) values (3, 'CRM-SP5489');
@@ -82,7 +82,7 @@ insert into medicos (id_pessoa, crm) values (5, 'CRM-SP5789');
 
 create table consultas(
 	id int not null primary key identity,
-	data date not null,
+	data datetime not null,
 	diagnostico varchar(100),
 	id_medico int not null,
 	id_paciente int not null,
@@ -91,26 +91,26 @@ create table consultas(
 );
 
 -- Consultas
-insert into consultas (data, diagnostico, id_medico, id_paciente) values ('2024-02-27', 'Gripe', 1, 1);
-insert into consultas (data, diagnostico, id_medico, id_paciente) values ('2024-02-28', 'Dor de cabe�a', 2, 2);
-insert into consultas (data, diagnostico, id_medico, id_paciente) values ('2024-02-29', 'Febre', 3, 3);
-insert into consultas (data, diagnostico, id_medico, id_paciente) values ('2024-03-01', 'Dor de garganta', 4, 4);
-insert into consultas (data, diagnostico, id_medico, id_paciente) values ('2024-03-02', 'Tosse', 5, 5);
+insert into consultas (data, diagnostico, id_medico, id_paciente) values ('2024-02-27 10:00:00', 'Gripe', 1, 1);
+insert into consultas (data, diagnostico, id_medico, id_paciente) values ('2024-02-28 11:00:00', 'Dor de cabeça', 2, 2);
+insert into consultas (data, diagnostico, id_medico, id_paciente) values ('2024-02-29 12:00:00', 'Febre', 3, 3);
+insert into consultas (data, diagnostico, id_medico, id_paciente) values ('2024-03-01 13:00:00', 'Dor de garganta', 4, 4);
+insert into consultas (data, diagnostico, id_medico, id_paciente) values ('2024-03-02 14:00:00', 'Tosse', 5, 5);
 
 create table exames(
 	id int not null primary key identity,
 	id_consulta int not null,
-	data date not null,
+	data datetime not null,
 	exame varchar(100)
 	foreign key (id_consulta) references consultas (id)
 );
 
 -- Exames
-insert into exames (id_consulta, data, exame) values (1, '2024-02-27', 'Raio-X de t�rax');
-insert into exames (id_consulta, data, exame) values (2, '2024-02-28', 'Resson�ncia magn�tica');
-insert into exames (id_consulta, data, exame) values (3, '2024-02-29', 'Tomografia computadorizada');
-insert into exames (id_consulta, data, exame) values (4, '2024-03-01', 'Exame de sangue');
-insert into exames (id_consulta, data, exame) values (5, '2024-03-02', 'Eletrocardiograma');
+insert into exames (id_consulta, data, exame) values (1, '2024-02-27 10:30:00', 'Raio-X de tórax');
+insert into exames (id_consulta, data, exame) values (2, '2024-02-28 11:30:00', 'Ressonância magnética');
+insert into exames (id_consulta, data, exame) values (3, '2024-02-29 12:30:00', 'Tomografia computadorizada');
+insert into exames (id_consulta, data, exame) values (4, '2024-03-01 13:30:00', 'Exame de sangue');
+insert into exames (id_consulta, data, exame) values (5, '2024-03-02 14:30:00', 'Eletrocardiograma');
 
 -- Pessoas
 select * from pessoas;
@@ -118,13 +118,13 @@ select * from pessoas;
 -- Telefones
 select * from telefones;
 
--- Endere�os
+-- Endereços
 select * from enderecos;
 
 -- Pacientes
 select * from pacientes;
 
--- M�dicos
+-- Médicos
 select * from medicos;
 
 -- Consultas
@@ -133,11 +133,11 @@ select * from consultas;
 -- Exames
 select * from exames;
 
-alter table pessoas add nome varchar(50);
+alter table pessoas add nome varchar(50) not null;
 
-update pessoas set nome = 'Jo�o' where id = 1;
+update pessoas set nome = 'João' where id = 1;
 update pessoas set nome = 'Maria' where id = 2;
-update pessoas set nome = 'Jos�' where id = 3;
+update pessoas set nome = 'José' where id = 3;
 update pessoas set nome = 'Ana' where id = 4;
 update pessoas set nome = 'Pedro' where id = 5;
 
@@ -156,5 +156,3 @@ select *
 from pessoas
 INNER Join medicos ON pessoas.id = medicos.id_pessoa;
 
-drop database consultorio2
-use master
