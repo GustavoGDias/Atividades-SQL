@@ -163,3 +163,104 @@ SELECT SUM(itp_valor) AS Total_Vendido_Produto_4
 FROM itens_pedidos
 WHERE prd_codigo = 4;
 
+-- 41. Consultar o valor total de cada pedido:
+SELECT ped_numero, SUM(itp_valor) AS Valor_Total
+FROM itens_pedidos
+GROUP BY ped_numero;
+
+-- 42. Consultar o total vendido do produto 3 em cada pedido:
+SELECT ped_numero, SUM(itp_qtd) AS Quantidade_Total_Produto_3
+FROM itens_pedidos
+WHERE prd_codigo = 3
+GROUP BY ped_numero;
+
+-- 43. Consultar os pedidos com valor total acima de R$ 30,00 reais:
+SELECT ped_numero, SUM(itp_valor) AS Valor_Total
+FROM itens_pedidos
+GROUP BY ped_numero
+HAVING SUM(itp_valor) > 30.00;
+
+-- 44. Consultar a quantidade de itens por pedido:
+SELECT ped_numero, COUNT(*) AS Quantidade_de_Itens
+FROM itens_pedidos
+GROUP BY ped_numero;
+
+-- 45. Consultar a quantidade de vezes que cada produto foi vendido:
+SELECT prd_codigo, SUM(itp_qtd) AS Quantidade_Total_Vendida
+FROM itens_pedidos
+GROUP BY prd_codigo;
+
+-- 46. Consultar quantos pedidos cada cliente solicitou:
+SELECT cli_codigo, COUNT(*) AS Quantidade_de_Pedidos
+FROM pedidos
+GROUP BY cli_codigo;
+
+-- 47. Consultar quantos pedidos cada funcionário registrou:
+SELECT fun_codigo, COUNT(*) AS Quantidade_de_Pedidos_Registrados
+FROM pedidos
+GROUP BY fun_codigo;
+
+-- 48. Consultar os pedidos que possuem mais do que 3 itens:
+SELECT ped_numero
+FROM itens_pedidos
+GROUP BY ped_numero
+HAVING COUNT(*) > 3;
+
+-- 49. Consultar o produto mais vendido em quantidade de itens:
+SELECT prd_codigo, SUM(itp_qtd) AS Quantidade_Total_Vendida
+FROM itens_pedidos
+GROUP BY prd_codigo
+ORDER BY SUM(itp_qtd) DESC
+LIMIT 1;
+
+-- 50. Consultar os pedidos (ped_numero, ped_data) que possuem mais do que 3 itens. Usar exists:
+SELECT ped_numero, ped_data
+FROM pedidos p
+WHERE EXISTS (
+    SELECT 1
+    FROM itens_pedidos
+    WHERE ped_numero = p.ped_numero
+    GROUP BY ped_numero
+    HAVING COUNT(*) > 3
+);
+
+-- 51. Consultar as pessoas que são clientes. Usar exists:
+SELECT *
+FROM pessoas p
+WHERE EXISTS (
+    SELECT 1
+    FROM clientes c
+    WHERE c.pes_codigo = p.pes_codigo
+);
+
+-- 52. Consultar os clientes que possuem pedidos com valor total acima de R$ 20,00. Usar exists:
+SELECT *
+FROM pessoas p
+WHERE EXISTS (
+    SELECT 1
+    FROM pedidos pd
+    JOIN itens_pedidos ip ON pd.ped_numero = ip.ped_numero
+    WHERE pd.cli_codigo = p.pes_codigo
+    GROUP BY pd.ped_numero
+    HAVING SUM(ip.itp_valor) > 20.00
+);
+
+-- 53. Consultar a data do sistema, e separadamente o ano, mês, dia, hora e minutos:
+SELECT GETDATE() AS Data_Sistema,
+       YEAR(GETDATE()) AS Ano,
+       MONTH(GETDATE()) AS Mes,
+       DAY(GETDATE()) AS Dia,
+       DATEPART(HOUR, GETDATE()) AS Hora,
+       DATEPART(MINUTE, GETDATE()) AS Minutos;
+
+-- 54. Consultar o valor total do pedido 1:
+SELECT ped_numero, SUM(itp_valor) AS Valor_Total
+FROM itens_pedidos
+WHERE ped_numero = 1
+GROUP BY ped_numero;
+
+-- 55. Consultar o total vendido do produto 3:
+SELECT prd_codigo, SUM(itp_valor) AS Valor_Total_Vendido
+FROM itens_pedidos
+WHERE prd_codigo = 3;
+
